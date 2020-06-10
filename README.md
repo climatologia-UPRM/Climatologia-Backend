@@ -1,5 +1,7 @@
 # [Climatología API UPRM](http://climatologia.uprm.edu:8008/)
 
+<img src="github_page_assets\api-screenshot.png" alt="hi" class="inline"/>
+
 ## Workspace
 
 Text editor/IDE of preference alongside [Google Chrome](https://www.google.com/chrome/) with the following plugins:
