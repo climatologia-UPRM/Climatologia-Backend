@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Climatología API</title>
+<style>
+	table, th, td {
+	border: 1px solid black;
+	}
+	th {
+		text-align: left;
+	}
+</style>
+</head>
+<body>
+	<h1>Welcome to Climatología's API home page!</h1>
+
+	<p>
+		This is a REST webservice that is accessed through a url with this format:
+		<br/><br/>
+		http://climatologia.uprm.edu:8008<b>/api?q=xxx[&additional partameters]</b>
+		<br/><br/>
+		with possible values:<br/>
+		<ul>
+			<li>q = "station", "data", default = null</li>
+			<li>optional additional parameters depend on the query:</li>
+		</ul>
+	</p>
+	<table style="width:100%">
+		<tr>
+			<th>query (q)</th>
+			<th>additional parameters</th> 
+			<th>use</th>
+		</tr>
+		<tr>
+			<td>station</td>
+			<td>
+				<p>
+					"type=" + stationtype (rqc | rqw | rq1), default = all
+				</p>
+			</td>
+			<td>
+				<p>
+					Will return a list of all stations specified by the type parameter in json format
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td>data</td>
+			<td>
+				<p>
+					"station=" + (station id), default = all<br/>
+					"elem=" + (prcp | tmax | tmin | tavg), default = null<br/>
+					"calc=" + (none | avg | max | min | stddev | stderr | all), default = none<br/>
+					"startdate=" + ISOdate (YYYY-MM-DD), default = none<br/>
+					"enddate=" + ISOdate (YYYY-MM-DD), default = startdate
+				</p>
+			</td>
+			<td>
+				<p>
+					Will return daily historic weather data entries grouped by station with all corresponding station information from startdate till enddate, in json format<br/>
+					If you wish to retrieve one specific date, only specify startdate<br/>
+					none returns values of date interval<br/>
+					avg returns averaged values of date interval<br/>
+					max returns maximum values of date interval<br/>
+					min returns minimum values of date interval<br/>
+					stddev returns standard deviation of date interval<br/>
+					stderr returns standard error of date interval<br/>
+					all returns all previous calculations in a single json
+				</p>
+			</td>
+		</tr>
+	</table>
+	<p>
+		Query Example:
+		<br/><br/>
+		http://climatologia.uprm.edu:8008/api?<b>q</b>=data&<b>elem</b>=prcp&<b>startdate</b>=2018-03-01&<b>enddate</b>=2018-03-31<br/>
+		<br/>
+		This query will return all prcp entries from March 1, 2018 to March 31, 2018<br/>
+		<b>q</b> was specified to be <i>data</i> which allowed use of data's additional parameters<br/>
+		<b>elem</b> was specified to be <i>prcp</i> which defined the element to be searched for<br/>
+		<b>startdate</b> was specified to be <i>2018-03-01</i> which defined the start of the date interval<br/>
+		<b>enddate</b> was specified to be <i>2018-03-31</i> which defined the end of the date interval<br/>
+		* If only one specific date is desired only specify <b>startdate</b> and obviate <b>enddate</b><br/>
+		Example: http://climatologia.uprm.edu:8008/api?<b>q</b>=data&<b>elem</b>=prcp&<b>startdate</b>=2018-03-01<br/>
+		<br/>
+		Since <b>calc</b> was not specified it's default value was <i>none</i>, hence the query returns all recorded dates and their data<br/>
+		Specifying <b>calc</b> (i.e. avg) would result in one average prcp value across the date interval per station<br/>
+		Example: http://climatologia.uprm.edu:8008/api?<b>q</b>=data&<b>elem</b>=prcp&<b>calc</b>=avg&<b>startdate</b>=2018-03-01&<b>enddate</b>=2018-03-31
+	</p>
+</body>
+
+</html>
