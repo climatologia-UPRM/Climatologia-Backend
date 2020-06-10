@@ -1,3 +1,2 @@
 # Climatología API UPRM
-
-climatologia.uprm.edu:8008
+https://code.visualstudio.com/
