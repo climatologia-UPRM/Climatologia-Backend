@@ -19,4 +19,3 @@ The framework used for the project is [Flask](https://flask.palletsprojects.com/
 [Flask-MySQLdb](https://flask-mysqldb.readthedocs.io/en/latest/)
 
 [jsonify](https://kite.com/python/docs/flask.jsonify)
-
