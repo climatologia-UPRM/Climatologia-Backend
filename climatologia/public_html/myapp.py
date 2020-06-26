@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
 from flask import jsonify
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -13,17 +14,22 @@ app.config['MYSQL_DB'] = 'DB'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
-
+cur = mysql.connection.cursor()
 #--- Home route
 @app.route('/')
 def welcome():
     return render_template('homePage.html')
 
+@app.route('/api/lastDate')
+def getLastDate():
+    cur.execute("SELECT `Date` FROM `climate`.`data_usgs` ORDER BY `Date` DESC LIMIT 1;")
+    lastDate = str(cur.fetchone())
+    lastDate = datetime.strptime(lastDate[lastDate.find('(',1)+1:lastDate.find(')')].replace(' ','').replace(',', '-'),'%Y-%m-%d').date()
+    return lastDate
+
 #--- Api route
 @app.route('/api')
 def get():
-    cur = mysql.connection.cursor()
-
     #--- Variables with default values set to null cannot remain null during execution
     q = request.args.get('q', 'null')
     station = request.args.get('station', 'all')
