@@ -60,6 +60,17 @@ def get():
         #--- Will return error message when attribute is null
         if attr == 'null':
             return 'Error: element parameter \"elem\" must be specified'
+        #--- will return normal values by day
+        elif attr == 'nord':
+            if station == 'all':
+                cur.callproc('get_all_normals_dly', [start, end])
+            else:
+                cur.callproc('get_station_normals_dly', [station, start, end])
+        elif attr == 'norm':
+            if station == 'all':
+                cur.callproc('get_all_normals_mly', [start, end])
+            else:
+                cur.callproc('get_station_normals_mly', [station, start, end])         
         else:
             #--- Will return base value according to attr
             if calc == 'none':
